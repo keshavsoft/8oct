@@ -7,7 +7,7 @@ module.exports = {
     bundle: './src/js/main.js'
   },
   output: {
-    path: "D:\\KeshavSoft\\knode\\Multi\\2022\\october\\8-1\\KJson\\public\\js",
+    path: "C:\\KeshavSoft\\nodejs\\multi\\2022\\oct\\8\\KJson\\public\\js",
     filename: '[name].js',
   },
   plugins: [
