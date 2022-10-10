@@ -1,4 +1,5 @@
 import { FetchAsPost } from "../MenuAsCards/ForFiles";
+import khtml from "./test.html";
 
 let jFPrepareMenuItem = ({ inFileName, inMenuClass, inIconClass }) => {
     let jVarLocalFileName = inFileName;
@@ -19,6 +20,7 @@ let jFPrepareMenuItem = ({ inFileName, inMenuClass, inIconClass }) => {
 };
 
 let jFShowFoldersInMenu = () => {
+    console.log("khtml : ", khtml);
     let jVarLocalRoute = jVarGlobalProjectConfig.RouteStart.Start;
 
     let jVarLocalSubRoute = jVarGlobalSubRoute;
