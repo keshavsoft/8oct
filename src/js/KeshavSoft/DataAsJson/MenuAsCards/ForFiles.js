@@ -1,7 +1,8 @@
+import { ForItemsFetchAsPost } from "./ForItems";
 
 let FetchAsPost = (event) => {
     let jVarLocalCurrentTarget = event.currentTarget;
-    
+
     let jVarLocalClosestNavbar = jVarLocalCurrentTarget.closest("ul");
 
     let jVarLocalFolderName = jVarLocalCurrentTarget.getAttribute("keshavsoftfoldername");
@@ -47,6 +48,23 @@ let FetchAsPost = (event) => {
             jVarLocalCurrentTarget.classList.add("text-info");
 
             BuildBreadcrumb({ inFolderName: jVarLocalFolderName });
+
+
+            let jVarLocalkeshavsoftfilesclick = document.getElementsByClassName("keshavsoftfilesclick");
+
+            Array.from(jVarLocalkeshavsoftfilesclick).forEach((spanElement) => {
+                spanElement.addEventListener("click", (event) => {
+                    let jVarInsideCurrentTarget = event.currentTarget;
+                    let jVarLocalKeshavsoftGetFileName = jVarInsideCurrentTarget.getAttribute("keshavsoftfilename");
+                    console.log("jVarLocalKeshavsoftGetFileName:", jVarLocalKeshavsoftGetFileName);
+
+
+                    ForItemsFetchAsPost({
+                        inFolderName: jVarLocalFolderName,
+                        inFileNameWithExtension:jVarLocalKeshavsoftGetFileName
+                    })
+                });
+            });
         };
     });
 };
@@ -69,6 +87,7 @@ let LocalStartFunc = ({ inFolderName, inFilesObjects }) => {
 
     jVarLocalKCont1.innerHTML = " ";
     jVarLocalKCont1.appendChild(jVarLocalNewRow);
+
 };
 
 let LocalLoopFunc = ({ inFolderName, inFileName, inItemCount }) => {

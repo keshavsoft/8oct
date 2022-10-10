@@ -3,7 +3,7 @@ let LocalBreadcrumbItemClick = ({ inFolderName, inFileNameWithExtension, inItemN
     this.ForScreens.FetchAsPost(inFolderName, inFileNameWithExtension, inItemName);
 };
 
-let FetchAsPost = (inFolderName, inFileNameWithExtension) => {
+let ForItemsFetchAsPost = ({ inFolderName, inFileNameWithExtension }) => {
     let jVarLocalFolderName = inFolderName;
     let jVarLocalFileNameWithExtension = inFileNameWithExtension;
 
@@ -37,7 +37,7 @@ let FetchAsPost = (inFolderName, inFileNameWithExtension) => {
         return response.json();
     }).then(dataFromApi => {
         if (dataFromApi !== null) {
-            this.ForItems.ToUi.StartFunc({
+            LocalStartFunc({
                 inFilesObjects: dataFromApi,
                 inFolderName: jVarLocalFolderName,
                 inFileNameWithExtension: jVarLocalFileNameWithExtension
@@ -72,50 +72,70 @@ let FetchAsPost = (inFolderName, inFileNameWithExtension) => {
 //     }
 // };
 
-ToUi: {
-    StartFunc: ({ inFolderName, inFileNameWithExtension, inFilesObjects }) => {
-        let jVarLocalFolderName = inFolderName;
-        let jVarLocalFileNameWithExtension = inFileNameWithExtension;
-        let jVarLocalFilesObjects = inFilesObjects;
+let LocalStartFunc = ({ inFolderName, inFileNameWithExtension, inFilesObjects }) => {
+    let jVarLocalFolderName = inFolderName;
+    let jVarLocalFileNameWithExtension = inFileNameWithExtension;
+    let jVarLocalFilesObjects = inFilesObjects;
 
-        let jVarLocalKCont1 = document.getElementById("KCont1");
-        let jVarLocalNewRow = document.createElement("div");
-        jVarLocalNewRow.setAttribute("class", "row");
+    let jVarLocalKCont1 = document.getElementById("KCont1");
+    let jVarLocalNewRow = document.createElement("div");
+    jVarLocalNewRow.setAttribute("class", "row");
 
-        Object.entries(jVarLocalFilesObjects).forEach(
-            ([key, value]) => {
-                let jVarLocalFromLoop = this.ForItems.ToUi.CommonFuncs.LoopFunc({
-                    inFolderName: jVarLocalFolderName,
-                    inFileNameWithExtension: jVarLocalFileNameWithExtension,
-                    inItemName: value.ItemName,
-                    inRowCount: value.RowCount,
-                    inScreenCount: value.ScreenCount
-                });
+    Object.entries(jVarLocalFilesObjects).forEach(
+        ([key, value]) => {
+            let jVarLocalFromLoop = LocalLoopFunc({
+                inFolderName: jVarLocalFolderName,
+                inFileNameWithExtension: jVarLocalFileNameWithExtension,
+                inItemName: value.ItemName,
+                inRowCount: value.RowCount,
+                inScreenCount: value.ScreenCount
+            });
 
-                jVarLocalNewRow.appendChild(jVarLocalFromLoop);
-            }
-        );
-
-        jVarLocalKCont1.innerHTML = " ";
-        jVarLocalKCont1.appendChild(jVarLocalNewRow);
-    },
-        CommonFuncs: {
-        LoopFunc: ({ inFolderName, inFileNameWithExtension, inItemName, inRowCount, inScreenCount }) => {
-            let jVarLocalFolderName = inFolderName;
-            let jVarLocalFileNameWithExtension = inFileNameWithExtension;
-            let jVarLocalItemName = inItemName;
-
-            let jVarLocalTemplate = document.getElementById("TemplateForItemCard");
-            var jVarLocalTemplateClone = jVarLocalTemplate.cloneNode(true);
-
-            jVarLocalTemplateClone.content.querySelector("a").setAttribute("onclick", `jGlobalClassForCardMenu.ForScreens.FetchAsPost('${jVarLocalFolderName}','${inFileNameWithExtension}','${jVarLocalItemName}','${inRowCount}')`);
-            jVarLocalTemplateClone.content.querySelector(".ItemNameClass").innerHTML = jVarLocalItemName;
-            jVarLocalTemplateClone.content.querySelector(".RowCountClass").innerHTML = inRowCount;
-            jVarLocalTemplateClone.content.querySelector(".ScreenCountClass").innerHTML = inScreenCount;
-
-            return document.importNode(jVarLocalTemplateClone.content, true);
+            jVarLocalNewRow.appendChild(jVarLocalFromLoop);
         }
-    }
+    );
+
+    jVarLocalKCont1.innerHTML = " ";
+    jVarLocalKCont1.appendChild(jVarLocalNewRow);
+
+    Handlebars.registerPartial("aaaaaaaaaaaaa", "kkkkkkkkkkk");
+
+    let jVarLocalkeshavsoftItemClick = document.getElementsByClassName("keshavsoftItemclick");
+    console.log("jVarLocalkeshavsoftItemClick--:", jVarLocalkeshavsoftItemClick);
+    Array.from(jVarLocalkeshavsoftItemClick).forEach((spanElement) => {
+        spanElement.addEventListener("click", (event) => {
+            let jVarInsideCurrentTarget = event.currentTarget;
+            let jVarLocalKeshavsoftGetFileName = jVarInsideCurrentTarget.getAttribute("keshavsoftfilename");
+            console.log("jVarLocalKeshavsoftGetFileName:", jVarLocalKeshavsoftGetFileName);
+
+            ForItemsFetchAsPost({
+                inFolderName: jVarLocalFolderName,
+                inFileNameWithExtension: jVarLocalKeshavsoftGetFileName
+            })
+        });
+    });
 };
 
-export { FetchAsPost }
+let LocalLoopFunc = ({ inFolderName, inFileNameWithExtension, inItemName, inRowCount, inScreenCount }) => {
+    let jVarLocalFolderName = inFolderName;
+    let jVarLocalFileNameWithExtension = inFileNameWithExtension;
+    let jVarLocalItemName = inItemName;
+
+    let jVarLocalTemplate = document.getElementById("TemplateForItemCard");
+    var jVarLocalTemplateClone = jVarLocalTemplate.cloneNode(true);
+
+    // jVarLocalTemplateClone.content.querySelector("a").setAttribute("onclick", `jGlobalClassForCardMenu.ForScreens.FetchAsPost('${jVarLocalFolderName}','${inFileNameWithExtension}','${jVarLocalItemName}','${inRowCount}')`);
+
+    // jVarLocalTemplateClone.content.querySelector("a").setAttribute("onclick", (event) => {
+    //     let jVarLocalCurrentTarget = event.currentTarget;
+    //     console.log("jVarLocalCurrentTarget : ", jVarLocalCurrentTarget);
+    // });
+
+    jVarLocalTemplateClone.content.querySelector(".ItemNameClass").innerHTML = jVarLocalItemName;
+    jVarLocalTemplateClone.content.querySelector(".RowCountClass").innerHTML = inRowCount;
+    jVarLocalTemplateClone.content.querySelector(".ScreenCountClass").innerHTML = inScreenCount;
+
+    return document.importNode(jVarLocalTemplateClone.content, true);
+};
+
+export { ForItemsFetchAsPost }
