@@ -1,7 +1,7 @@
 
 let FetchAsPost = (event) => {
     let jVarLocalCurrentTarget = event.currentTarget;
-    console.log("jVarLocalCurrentTarget : ", jVarLocalCurrentTarget.getAttribute("keshavsoftfoldername"));
+    
     let jVarLocalClosestNavbar = jVarLocalCurrentTarget.closest("ul");
 
     let jVarLocalFolderName = jVarLocalCurrentTarget.getAttribute("keshavsoftfoldername");
@@ -32,9 +32,8 @@ let FetchAsPost = (event) => {
 
         return response.json();
     }).then(dataFromApi => {
-        console.log("dataFromApi : ", dataFromApi);
         if (dataFromApi !== null) {
-            StartFunc({
+            LocalStartFunc({
                 inFilesObjects: dataFromApi,
                 inFolderName: jVarLocalFolderName
             });
@@ -52,7 +51,7 @@ let FetchAsPost = (event) => {
     });
 };
 
-let StartFunc = ({ inFolderName, inFilesObjects }) => {
+let LocalStartFunc = ({ inFolderName, inFilesObjects }) => {
     let jVarLocalFilesObjects = inFilesObjects;
     let jVarLocalKCont1 = document.getElementById("KCont1");
     let jVarLocalNewRow = document.createElement("div");
@@ -60,7 +59,7 @@ let StartFunc = ({ inFolderName, inFilesObjects }) => {
 
     Object.entries(jVarLocalFilesObjects).forEach(
         ([key, value]) => {
-            let jVarLocalFromLoop = LoopFunc({
+            let jVarLocalFromLoop = LocalLoopFunc({
                 inFolderName: inFolderName,
                 inFileName: value.FileName,
                 inItemCount: Object.keys(value.Items).length
@@ -72,7 +71,7 @@ let StartFunc = ({ inFolderName, inFilesObjects }) => {
     jVarLocalKCont1.appendChild(jVarLocalNewRow);
 };
 
-let LoopFunc = ({ inFolderName, inFileName, inItemCount }) => {
+let LocalLoopFunc = ({ inFolderName, inFileName, inItemCount }) => {
     let jVarLocalTemplate = document.getElementById("TemplateForFiles");
     var jVarLocalTemplateClone = jVarLocalTemplate.cloneNode(true);
     jVarLocalTemplateClone.innerHTML = jVarLocalTemplateClone.innerHTML.replace(/{{FileName}}/g, inFileName);
