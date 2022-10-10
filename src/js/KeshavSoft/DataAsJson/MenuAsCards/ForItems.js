@@ -116,4 +116,6 @@ ToUi: {
             return document.importNode(jVarLocalTemplateClone.content, true);
         }
     }
-}
+};
+
+export { FetchAsPost }
