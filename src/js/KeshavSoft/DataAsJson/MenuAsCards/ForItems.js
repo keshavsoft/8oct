@@ -1,3 +1,4 @@
+import { ScreensFetchAsPost } from "./ForScreens";
 
 let LocalBreadcrumbItemClick = ({ inFolderName, inFileNameWithExtension, inItemName }) => {
     this.ForScreens.FetchAsPost(inFolderName, inFileNameWithExtension, inItemName);
@@ -101,16 +102,16 @@ let LocalStartFunc = ({ inFolderName, inFileNameWithExtension, inFilesObjects })
     Handlebars.registerPartial("aaaaaaaaaaaaa", "kkkkkkkkkkk");
 
     let jVarLocalkeshavsoftItemClick = document.getElementsByClassName("keshavsoftItemclick");
-    console.log("jVarLocalkeshavsoftItemClick--:", jVarLocalkeshavsoftItemClick);
+    console.log("kkkkkkkkkkkkkkkkkkkkk:", jVarLocalkeshavsoftItemClick);
     Array.from(jVarLocalkeshavsoftItemClick).forEach((spanElement) => {
         spanElement.addEventListener("click", (event) => {
             let jVarInsideCurrentTarget = event.currentTarget;
-            let jVarLocalKeshavsoftGetFileName = jVarInsideCurrentTarget.getAttribute("keshavsoftfilename");
-            console.log("jVarLocalKeshavsoftGetFileName:", jVarLocalKeshavsoftGetFileName);
+            let jVarLocalKeshavsoftGetItemName = jVarInsideCurrentTarget.getAttribute("keshavsoftItemName");
 
-            ForItemsFetchAsPost({
+            ScreensFetchAsPost({
                 inFolderName: jVarLocalFolderName,
-                inFileNameWithExtension: jVarLocalKeshavsoftGetFileName
+                inFileNameWithExtension:jVarLocalFileNameWithExtension,
+                inItemName: jVarLocalKeshavsoftGetItemName
             })
         });
     });
@@ -120,6 +121,7 @@ let LocalLoopFunc = ({ inFolderName, inFileNameWithExtension, inItemName, inRowC
     let jVarLocalFolderName = inFolderName;
     let jVarLocalFileNameWithExtension = inFileNameWithExtension;
     let jVarLocalItemName = inItemName;
+    let jVarLocalAnchor;
 
     let jVarLocalTemplate = document.getElementById("TemplateForItemCard");
     var jVarLocalTemplateClone = jVarLocalTemplate.cloneNode(true);
@@ -130,10 +132,24 @@ let LocalLoopFunc = ({ inFolderName, inFileNameWithExtension, inItemName, inRowC
     //     let jVarLocalCurrentTarget = event.currentTarget;
     //     console.log("jVarLocalCurrentTarget : ", jVarLocalCurrentTarget);
     // });
-
+    jVarLocalAnchor = jVarLocalTemplateClone.content.querySelector("a");
+    jVarLocalAnchor.setAttribute("keshavsoftItemName", jVarLocalItemName);
+    
+    console.log("jVarLocalAnchor : ", jVarLocalAnchor);
     jVarLocalTemplateClone.content.querySelector(".ItemNameClass").innerHTML = jVarLocalItemName;
     jVarLocalTemplateClone.content.querySelector(".RowCountClass").innerHTML = inRowCount;
     jVarLocalTemplateClone.content.querySelector(".ScreenCountClass").innerHTML = inScreenCount;
+
+    // jVarLocalAnchor.addEventListener("click", (event) => {
+    //     let jVarInsideCurrentTarget = event.currentTarget;
+    //     let jVarLocalKeshavsoftGetItemName = jVarInsideCurrentTarget.getAttribute("keshavsoftItemName");
+
+    //     ScreensFetchAsPost({
+    //         inFolderName: jVarLocalFolderName,
+    //         inFileNameWithExtension:jVarLocalFileNameWithExtension,
+    //         inItemName: jVarLocalKeshavsoftGetItemName
+    //     })
+    // });
 
     return document.importNode(jVarLocalTemplateClone.content, true);
 };
